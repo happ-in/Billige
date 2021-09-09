@@ -52,7 +52,7 @@ public class WalletService implements IWalletService
 	@Override
 	public Wallet get(final long userId)
 	{
-		return null;
+		return walletRepository.get(userId);
 	}
 
 	/**
@@ -61,9 +61,8 @@ public class WalletService implements IWalletService
 	 * @return
 	 */
 	@Override
-	public Wallet register(final Wallet wallet)
-	{
-		return null;
+	public Wallet register(final Wallet wallet) {
+		return get(walletRepository.create(wallet));
 	}
 
 	/**

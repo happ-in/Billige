@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextException;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,12 @@ public class WalletController {
 	@ApiOperation(value = "Register wallet of user")
 	@RequestMapping(value = "/wallets", method = RequestMethod.POST)
 	public Wallet register(@Valid @RequestBody Wallet wallet) {
-		return null;
+
+		Wallet newWallet = walletService.register(wallet);
+		if (newWallet == null) {
+			throw new ApplicationContextException("지갑 정보를 등록할 수 없습니다!");
+		}
+		return newWallet;
 	}
 
 	/**
