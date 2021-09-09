@@ -85,7 +85,7 @@ export default {
        */
       registerWallet(this.userId, this.walletAddress, "save", "fail");
       this.$store.commit("setWalletAddress", this.walletAddress);
-      this.$router.push("/mypage/wallet_info");
+      this.$router.push({ path: "wallet_info" });
     },
   },
 };
