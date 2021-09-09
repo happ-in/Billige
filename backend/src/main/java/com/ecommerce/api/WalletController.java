@@ -67,9 +67,7 @@ public class WalletController {
 	@ApiOperation(value = "Fetch wallet of user")
 	@RequestMapping(value = "/wallets/of/{uid}", method = RequestMethod.GET)
 	public Wallet getByUser(@PathVariable long uid) {
-		Wallet wallet = walletService.get(uid);
-		log.debug("wallet : " + wallet);
-		return wallet;
+		return walletService.get(uid);
 	}
 
 	/**
