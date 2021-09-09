@@ -8,6 +8,7 @@ import com.ecommerce.domain.Wallet;
 import com.ecommerce.domain.exception.ApplicationException;
 import com.ecommerce.domain.exception.NotFoundException;
 import com.ecommerce.domain.repository.IWalletRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+
+import lombok.extern.log4j.Log4j2;
 
 /**
  * TODO Sub PJT Ⅱ 과제 1, 과제 3
@@ -27,8 +30,8 @@ import java.util.List;
  * IWalletService를 implements 하여 구현합니다.
  */
 @Service
-public class WalletService implements IWalletService
-{
+@Log4j2
+public class WalletService implements IWalletService {
 	private static final Logger log = LoggerFactory.getLogger(WalletService.class);
 
 	private IWalletRepository walletRepository;
@@ -37,8 +40,8 @@ public class WalletService implements IWalletService
 
 	@Autowired
 	public WalletService(IWalletRepository walletRepository,
-						 IEthereumService ethereumService,
-						 ICashContractService cashContractService) {
+		IEthereumService ethereumService,
+		ICashContractService cashContractService) {
 		this.walletRepository = walletRepository;
 		this.ethereumService = ethereumService;
 		this.cashContractService = cashContractService;
@@ -50,8 +53,7 @@ public class WalletService implements IWalletService
 	 * @return
 	 */
 	@Override
-	public Wallet get(final long userId)
-	{
+	public Wallet get(final long userId) {
 		return walletRepository.get(userId);
 	}
 
@@ -71,8 +73,7 @@ public class WalletService implements IWalletService
 	 * @return Wallet
 	 */
 	@Override
-	public Wallet syncBalance(final String walletAddress, final BigDecimal balance, final int cash)
-	{
+	public Wallet syncBalance(final String walletAddress, final BigDecimal balance, final int cash) {
 		return null;
 	}
 

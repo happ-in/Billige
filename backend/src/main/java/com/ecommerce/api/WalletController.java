@@ -5,6 +5,8 @@ import com.ecommerce.domain.Wallet;
 import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
+@Log4j2
 public class WalletController {
 	public static final Logger logger = LoggerFactory.getLogger(WalletController.class);
 
@@ -64,7 +67,9 @@ public class WalletController {
 	@ApiOperation(value = "Fetch wallet of user")
 	@RequestMapping(value = "/wallets/of/{uid}", method = RequestMethod.GET)
 	public Wallet getByUser(@PathVariable long uid) {
-		return null;
+		Wallet wallet = walletService.get(uid);
+		log.debug("wallet : " + wallet);
+		return wallet;
 	}
 
 	/**

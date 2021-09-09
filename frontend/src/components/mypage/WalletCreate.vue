@@ -71,7 +71,7 @@ export default {
       var web3 = new Web3("http://localhost:8545"); // your geth
       var account = web3.eth.accounts.create();
 
-      console.log(account);
+      // console.log(account);
 
       this.walletAddress = account.address;
       this.privateKey = account.privateKey;
@@ -84,6 +84,8 @@ export default {
        * 생성된 사용자의 지갑 정보를 서버에 등록한다.
        */
       registerWallet(this.userId, this.walletAddress, "save", "fail");
+      this.$store.commit("setWalletAddress", this.walletAddress);
+      this.$router.push("/mypage/wallet_info");
     },
   },
 };

@@ -19,7 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.log4j.Log4j2;
+
 @Repository
+@Log4j2
 public class WalletRepository implements IWalletRepository {
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcInsert simpleJdbcInsert;
@@ -43,6 +46,7 @@ public class WalletRepository implements IWalletRepository {
 	@Override
 	public Wallet get(final long ownerId) {
 		StringBuilder sbSql = new StringBuilder("SELECT * FROM wallets WHERE owner_id=?");
+
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
 				new Object[] {ownerId}, (rs, rowNum) -> WalletFactory.create(rs));
