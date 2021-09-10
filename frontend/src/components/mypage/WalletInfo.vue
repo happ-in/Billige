@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h-breadcrumb
-      title="마이페이지"
-      description="지갑을 생성하거나 상품 상태를 확인할 수 있습니다."
-    ></h-breadcrumb>
+    <h-breadcrumb title="마이페이지" description="지갑을 생성하거나 상품 상태를 확인할 수 있습니다."></h-breadcrumb>
     <div class="container">
       <my-page-nav></my-page-nav>
       <div id="mywallet-info" class="row">
@@ -18,12 +15,7 @@
                 <th>보유 ETH</th>
                 <td class="text-right">{{ wallet["balance"] }} ETH</td>
                 <td colspan="2" class="text-left">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    v-on:click="chargeETH()"
-                    v-bind:disabled="isCharging"
-                  >
+                  <button type="button" class="btn btn-secondary" v-on:click="chargeETH()" v-bind:disabled="isCharging">
                     {{ isCharging ? "충전중" : "ETH 충전하기" }}
                   </button>
                 </td>
@@ -33,20 +25,11 @@
                 <td class="text-right">{{ wallet["cash"] }} CASH</td>
                 <td colspan="2" class="text-left">
                   <div class="input-group">
-                    <input
-                      v-model="cashChargeAmount"
-                      type="number"
-                      class="form-control"
-                    />
+                    <input v-model="cashChargeAmount" type="number" class="form-control" />
                     <div class="input-group-append mr-3">
                       <span class="input-group-text">ETH</span>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      v-on:click="chargeCash()"
-                      v-bind:disabled="!canCashCharge"
-                    >
+                    <button type="button" class="btn btn-primary" v-on:click="chargeCash()" v-bind:disabled="!canCashCharge">
                       {{ isCashCharging ? "충전중" : "캐시 충전하기" }}
                     </button>
                   </div>
@@ -83,7 +66,7 @@ import BN from "bn.js";
 export default {
   name: "WalletInfo",
   components: {
-    MyPageNav
+    MyPageNav,
   },
   data() {
     return {
@@ -93,23 +76,23 @@ export default {
         address: "",
         balance: 0,
         cash: 0,
-        receivingCount: 0
+        receivingCount: 0,
       },
       user: {
         name: "",
-        email: ""
+        email: "",
       },
       isCharging: false, // 현재 코인을 충전하고 있는 중인지 확인
       isCashCharging: false, // 현재 캐시을 충전하고 있는 중인지 확인
       cashChargeAmount: 0.1,
       userId: this.$store.state.user.id,
-      walletAddress: this.$store.state.user.walletAddress
+      walletAddress: this.$store.state.user.walletAddress,
     };
   },
   computed: {
     canCashCharge() {
       return this.cashChargeAmount >= 0.1 && !this.isCashCharging;
-    }
+    },
   },
   methods: {
     fetchWalletInfo() {
@@ -117,20 +100,20 @@ export default {
        * TODO: PJTⅡ 과제1 Req.1-2 [지갑 조회]
        * 사용자 지갑을 조회하여 잔액을 화면에 보여준다.
        */
-
+      const vm = this;
+      walletService.findByUserId(this.userId, function(res) {
+        vm.wallet = res.data;
+      });
       /**
        * TODO: PJTⅡ 과제3 Req.1-3 [지갑 조회 확장]
        * 캐시 잔액 정보를 포함하여 화면에 보여준다.
        */
-
     },
     /**
      * TODO: PJTⅡ 과제1 Req.1-3 [코인 충전]
      * 이더 충전을 요청
      */
-    chargeETH() {
-  
-    },
+    chargeETH() {},
     chargeCash() {
       const vm = this;
       this.isCashCharging = true;
@@ -140,24 +123,18 @@ export default {
          * TODO: PJTⅡ 과제3 Req.1-1 [토큰 구매]
          * 이더를 지불하고 캐시를 충전
          */
-        
       }
     },
     /**
      * TODO: PJTⅡ 과제3 Req.1-2 [토큰 잔액 조회]
      * 스마트 컨트랙트의 잔액 확인 함수 호출
      */
-    fetchCashBalance() {
-      
-    },
+    fetchCashBalance() {},
     fetchEtherBalance() {
       const vm = this;
       walletService.findByUserId(this.userId, function(res) {
         const web3 = createWeb3();
-        vm.wallet.balance = web3.utils.fromWei(
-          res.data.balance.toString(),
-          "ether"
-        );
+        vm.wallet.balance = web3.utils.fromWei(res.data.balance.toString(), "ether");
       });
     },
     // 회원 정보 가져온다.
@@ -173,7 +150,7 @@ export default {
   mounted() {
     this.fetchWalletInfo();
     this.fetchUserInfo();
-  }
+  },
 };
 </script>
 
