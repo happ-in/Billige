@@ -113,7 +113,27 @@ export default {
      * TODO: PJTⅡ 과제1 Req.1-3 [코인 충전]
      * 이더 충전을 요청
      */
-    chargeETH() {},
+    chargeETH() {
+      this.isCharging = true;
+      this.isCashCharging = true;
+
+      const vm = this;
+
+      const body = {
+        id: this.wallet.id,
+        ownerId: this.wallet.ownerId,
+        address: this.wallet.address,
+        balance: this.wallet.balance + this.cashChargeAmount,
+        cash: this.wallet.cash,
+        receivingCount: this.wallet.receivingCount,
+      };
+
+      walletService.chargeEther(this.walletAddress, body, function(res) {
+        vm.wallet = res.data;
+      });
+      this.isCharging = false;
+      this.isCashCharging = false;
+    },
     chargeCash() {
       const vm = this;
       this.isCashCharging = true;

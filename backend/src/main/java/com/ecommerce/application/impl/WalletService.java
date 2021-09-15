@@ -30,7 +30,6 @@ import lombok.extern.log4j.Log4j2;
  * IWalletService를 implements 하여 구현합니다.
  */
 @Service
-@Log4j2
 public class WalletService implements IWalletService {
 	private static final Logger log = LoggerFactory.getLogger(WalletService.class);
 
@@ -74,7 +73,12 @@ public class WalletService implements IWalletService {
 	 */
 	@Override
 	public Wallet syncBalance(final String walletAddress, final BigDecimal balance, final int cash) {
-		return null;
+		Wallet wallet = null;
+		if (walletRepository.updateBalance(walletAddress, balance, cash) != 0) {
+			walletRepository.updateRequestNo(walletAddress);
+			wallet = walletRepository.get(walletAddress);
+		}
+		return wallet;
 	}
 
 	/**
@@ -85,6 +89,6 @@ public class WalletService implements IWalletService {
 	 */
 	@Override
 	public Wallet requestEth(String walletAddress) {
-		return null;
+		return walletRepository.get(walletAddress);
 	}
 }

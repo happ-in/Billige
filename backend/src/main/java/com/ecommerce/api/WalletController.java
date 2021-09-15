@@ -77,7 +77,7 @@ public class WalletController {
 	 */
 	@ApiOperation(value = "Request ether")
 	@RequestMapping(value ="/wallets/{address}", method = RequestMethod.PUT)
-	public Wallet requestEth(@PathVariable String address){ // 테스트 가능하도록 일정 개수의 코인을 충전해준다.
-		return null;
+	public Wallet requestEth(@PathVariable String address, @Valid @RequestBody Wallet wallet){ // 테스트 가능하도록 일정 개수의 코인을 충전해준다.
+		return walletService.syncBalance(address, wallet.getBalance(), wallet.getCash());
 	}
 }

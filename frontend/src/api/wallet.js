@@ -33,7 +33,7 @@ function isValidPrivateKey(userId, privateKey, success) {
 function registerWallet(userId, walletAddress, success, fail) {
   const body = {
     ownerId: userId,
-    address: walletAddress
+    address: walletAddress,
   };
 
   instance
@@ -42,17 +42,11 @@ function registerWallet(userId, walletAddress, success, fail) {
     .catch(fail);
 }
 
-function chargeEther(walletAddress, success, fail) {
+function chargeEther(walletAddress, body, success, fail) {
   instance
-    .put("/api/wallets/" + walletAddress)
+    .put("/api/wallets/" + walletAddress, JSON.stringify(body))
     .then(success)
     .catch(fail);
 }
 
-export {
-  findAddressById,
-  findByUserId,
-  registerWallet,
-  isValidPrivateKey,
-  chargeEther
-};
+export { findAddressById, findByUserId, registerWallet, isValidPrivateKey, chargeEther };
