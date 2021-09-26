@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.ssafy.billige.item.domain.ActiveStatus;
 import com.ssafy.billige.user.domain.User;
-import com.ssafy.billige.user.domain.UserStatus;
 import com.ssafy.billige.user.service.KakaoLoginService;
 import com.ssafy.billige.user.service.UserService;
 
@@ -76,7 +76,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 				.tokenId(tokenId)
 				.username(nickname)
 				.email(email)
-				.is_deleted(UserStatus.N)
+				.is_deleted(ActiveStatus.N)
 				.build();
 
 			userService.getKakaoUser(user);

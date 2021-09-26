@@ -8,3 +8,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+jwt:
+  secret: billige
