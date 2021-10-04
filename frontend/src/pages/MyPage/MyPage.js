@@ -10,10 +10,12 @@ import fingerprint from "../../assets/icons/fingerprint.png"
 
 import { getFunction } from "../../utils/getFunction";
 import "./MyPage.css";
+import axios from 'axios';
 const MyPage = () => {
   const [wallet, setWallet] = useState(true);
   const [bliAmount, setbliAmount] = useState(0);
   const [open, setOpen] = React.useState(false);
+  const [user, setUser] = useState({})
   const btn = useRef();
   
   const user = {
@@ -59,6 +61,26 @@ const MyPage = () => {
     setbliAmount(Math.floor(getCoin));
     setWallet(false);
   }
+
+  useEffect(() => {
+    const token = JSON.parse(window.localStorage.getItem('token'));
+    console.log("Bearer " + token);
+    axios
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/user/mypage`, {
+        headers: {
+          Authentication:
+            "Bearer " + token,
+        },
+
+      })
+      .then((response) => {
+        setUser(response.data)
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
   // console.log(user.wallet)
   
   return (
@@ -66,19 +88,16 @@ const MyPage = () => {
       <div className="mypage-profile">
         <img src={profile} alt="product" className="mypage-user-icon" />
         <div className="mypage-profile-desc">
-          <h4>{user.name} 님 안녕하세요!</h4>
-          <span>{user.email}</span>
+          <h4>{user.userName} 님 안녕하세요!</h4>
+          <span>{user.userEmail}</span>
         </div>
-        {/* <Link to="/useredit">
-          <img src={arrow} width="20px" alt="arrow" />
-        </Link> */}
       </div>
       <Link to="/useredit">
         <button className="mypage-useredit">프로필 수정</button>
       </Link>
       <div className="mypage-wallet">
 
-        {wallet ?
+        {!user.existWallet ?
           <div className="mypage-wallet-create" onClick={createWallet}>
             <img src={fingerprint} alt="fingerprint" width="60px" />
             지갑 생성하기
@@ -99,7 +118,11 @@ const MyPage = () => {
                       <Input />
                     </div>
                     <div className="charge-modal-input">
+<<<<<<< frontend/src/pages/MyPage/MyPage.js
                       <span>충전 BLI</span>
+=======
+                      <span>보유BLI</span>
+>>>>>>> frontend/src/pages/MyPage/MyPage.js
                       <Input />
                       BLI
                     </div>
@@ -112,7 +135,11 @@ const MyPage = () => {
                 </Modal.Actions>
               </Modal>
             </div>
+<<<<<<< frontend/src/pages/MyPage/MyPage.js
             <div>{bliAmount} BLI</div>
+=======
+            <div>{user.userBli} BLI</div>
+>>>>>>> frontend/src/pages/MyPage/MyPage.js
             <div> 잔액이 부족하면 대여서비스를 이용할 수 없습니다!</div>
 
           </div>
@@ -170,7 +197,6 @@ const MyPage = () => {
           </div>
         </Link>
       </div>
-
 
     </div >
   );
